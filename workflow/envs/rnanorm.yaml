@@ -1,0 +1,11 @@
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - bioconda::rnanorm
+  - r-tidyverse
+  - r-FactoMineR
+  - r-factoextra
+  - r-corrplot
+  - r-pheatmap

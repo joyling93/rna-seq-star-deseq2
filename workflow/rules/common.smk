@@ -20,6 +20,11 @@ def get_final_output():
     final_output.append("results/deseq2/normcounts.symbol.tsv")
     final_output.append("results/counts/all.symbol.tsv")
     final_output.append("results/qc/multiqc_report.html")
+    final_output.append("results/rnanorm/tpm.tsv")
+    final_output.append("results/rnanorm/tpm_box.png")
+    final_output.append("results/rnanorm/tpm_cor.png")
+    final_output.append("results/rnanorm/tpm_heat.png")
+    final_output.append("results/rnanorm/tpm_pca.png")
 
     if config["pca"]["activate"]:
         # get all the variables to plot a PCA for
