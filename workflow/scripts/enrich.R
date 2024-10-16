@@ -1,24 +1,40 @@
-enrich_ora<- function(gene_symbol,db,out_dir,use_internal_data=F){
-                suppressMessages(library(clusterProfiler))
-                suppressMessages(library(org.Hs.eg.db))
-                suppressMessages(library(org.Mm.eg.db))
-                #suppressMessages(library(org.Rn.eg.db))
-                #suppressMessages(library(org.Ss.eg.db))
-                suppressMessages(library(KEGG.db))
-                dir.create(out_dir,recursive = T)
-                db<-
-                        switch(db,
-                               homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa'),
-                               mus_musculus=c('org.Mm.eg.db','Mus musculus','mmu'),
-                               rno=c('org.Rn.eg.db','Rattus norvegicus','rno'),
-                               ss=c('org.Ss.eg.db','Sus scrofa','susScr')
-                        )
-                gene_symbol <- gene_symbol$gene
-                print(head(gene_symbol))
-                eg = bitr(gene_symbol, fromType="SYMBOL", toType="ENTREZID", OrgDb=db[1])
-                geneList<-eg$ENTREZID
+suppressMessages(library(clusterProfiler))
+suppressMessages(library(org.Hs.eg.db))
+suppressMessages(library(org.Mm.eg.db))
+#suppressMessages(library(org.Rn.eg.db))
+#suppressMessages(library(org.Ss.eg.db))
+suppressMessages(library(KEGG.db))
+library(STRINGdb)
+#读取差异表达基因
+library(tidyverse)
+gene_list=read.table(snakemake@input[[1]],header = T)
+db<-snakemake@config[['ref']][['species']]
+outdir<-snakemake@output[[1]]
+dir.create(outdir,recursive = T)
+
+if(!db%in%c("homo_sapiens","org.Mm.eg.db")){
+    db<-"homo_sapiens"
+}
+db<-
+        switch(db,
+                homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa','9606'),
+                mus_musculus=c('org.Mm.eg.db','Mus musculus','mmu','10090'),
+                rno=c('org.Rn.eg.db','Rattus norvegicus','rno'),
+                ss=c('org.Ss.eg.db','Sus scrofa','susScr')
+        )
+
+print(head(gene_list$gene))
+eg <- bitr(gene_list$gene, fromType="SYMBOL", toType="ENTREZID", OrgDb=db[1])
+gene_list <- gene_list%>%left_join(eg,by=join_by(gene==SYMBOL))%>%drop_na()
+#geneList<-eg$ENTREZID
+
+gl<-gene_list%>%
+    mutate(type=ifelse(padj>0.99,'not_significant',
+        ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
+
+enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                 pl <- list()
-                
+                geneList <- gl$ENTREZID
                 safe_enrichGO<-possibly(enrichGO,'no results')
                 ego1 <- enrichGO(gene         = geneList,
                                  OrgDb         = db[1],
@@ -101,7 +117,7 @@ enrich_ora<- function(gene_symbol,db,out_dir,use_internal_data=F){
                 print('kegg done')
                 
                 dl <- 
-                list('anno_index'=eg,
+                list('anno_index'=gl,
                      'bp_ora'=ego1,
                      'mf_ora'=ego2,
                      'cc_ora'=ego5,
@@ -109,20 +125,51 @@ enrich_ora<- function(gene_symbol,db,out_dir,use_internal_data=F){
                 #saveRDS(dl,file.path(out_dir,'enrich_list.rds'))
                 openxlsx::write.xlsx(dl,file.path(out_dir,'enrich_list.xlsx'),overwrite =T)
                 
+                ##ppi
+                string_db <- STRINGdb$new(version="12.0",species=db[4],score_threshold=700,
+                                input_directory= "/public/home/weiyifan/database/stringdb/")
+                
+                deg_mapped <- string_db$map(gl$SYMBOL, "gene", removeUnmappedRows = TRUE )
+                
+                cat("Total String id mapped :", dim(deg_mapped)[1])
+                
+                info <- string_db$get_interactions(deg_mapped$STRING_id)
+                
+                pdb<-string_db$get_proteins()
+                info <- left_join(info,pdb,by = c('from'='protein_external_id'))%>%
+                            left_join(pdb,by = c('to'='protein_external_id'))%>%
+                            dplyr::select(4,7,3)%>%
+                            rename('from'=preferred_name.x,'to'=preferred_name.y)
+                write.table(info, file = file.path(out_dir,"STRING_info.txt"),sep="\t", row.names =F, quote = F)
                 Sys.sleep(30)
 }
 
-#读取差异表达基因
-library(tidyverse)
-gene_list=read.table(snakemake@input[[1]],header = T)
 ##ora
-gl<-gene_list%>%
-    mutate(type=ifelse(padj>0.99,'not_significant',
-        ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
-db<-snakemake@config[['ref']][['species']]
-if(!db%in%c("homo_sapiens","org.Mm.eg.db")){
-    db<-"homo_sapiens"
-}
-walk(gl,safely(enrich_ora),
-    db=db,out_dir=snakemake@output[[1]])
+iwalk(gl,safely(~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y))))
 ##gsea
+geneList <- gene_list$log2FoldChange
+names(geneList) <- gene_list$ENTREZID
+geneList <- sort(geneList, decreasing = TRUE)
+
+ego <- gseGO(geneList     = geneList,
+              OrgDb        = db[1],
+              ont          = "all",
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              pvalueCutoff = 0.05,
+              verbose      = FALSE,
+              use_internal_data = T
+              )
+write.csv(ego,file.path(outdir,'go_gsea.csv'))
+saveRDS(ego,file.path(outdir,'go_gsea.rds'))
+
+kk <- gseKEGG(geneList     = geneList,
+               organism     = db[1],
+               minGSSize    = 120,
+               pvalueCutoff = 0.05,
+               verbose      = FALSE,
+               use_internal_data = T
+               )
+
+write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
+saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
