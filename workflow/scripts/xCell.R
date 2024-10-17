@@ -2,7 +2,7 @@
 library(xCell)
 exprMatrix = read.table(snakemake@input[[1]],header=TRUE,row.names=1, as.is=TRUE)
 
-data=xCellAnalysis(t(exprMatrix))
+data=xCellAnalysis(exprMatrix)
 out_dir=snakemake@output[[1]]
 write.table(data,file=file.path(out_dir,"xCell.csv"))
 library(pheatmap)

@@ -1,6 +1,6 @@
 rule tpm:
     input:
-        counts=rules.count_matrix.output,
+        counts="results/counts/all.tsv",
         gtf="resources/genome.gtf",
     output:
         "results/rnanorm/tpm.tsv"
@@ -10,6 +10,21 @@ rule tpm:
         "../envs/rnanorm.yaml"
     script:
         "../scripts/rnanorm.py"
+
+
+rule tpm_gene_2_symbol:
+    input:
+        counts="results/rnanorm/tpm.tsv",
+    output:
+        symbol="results/rnanorm/tpm.symbol.tsv",
+    params:
+        species=get_bioc_species_name(),
+    log:
+        "logs/gene2symbol/tpm.log",
+    conda:
+        "../envs/biomart.yaml"
+    script:
+        "../scripts/gene2symbol.R"
 
 rule rnanorm_plot:
     input:

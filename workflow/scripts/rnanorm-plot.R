@@ -3,7 +3,7 @@ library(tidyverse)
 
 
 data=read.table(snakemake@input[[1]],sep="\t",header = T)
-data=column_to_rownames(data,var = 'X')%>%t()
+data=column_to_rownames(data,var = 'gene')
 data=subset(data,rowSums(data)>0)
 
 p <- data %>%as.tibble()%>%

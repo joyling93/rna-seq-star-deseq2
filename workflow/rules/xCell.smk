@@ -1,11 +1,11 @@
 rule xCell:
     input:
-        "results/rnanorm/tpm.tsv",
+        "results/rnanorm/tpm.symbol.tsv",
     output:
         "results/xCell/xCell.csv",
-        "results/xCell/xCell.png",
+        "results/xCell/xCell.png"
     conda:
-        "seurat4"
+        "/public/home/weiyifan/miniforge3/envs/xCell"
     log:
         "logs/xCell.log",
     script:
