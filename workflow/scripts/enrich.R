@@ -17,8 +17,8 @@ if(!db%in%c("homo_sapiens","org.Mm.eg.db")){
 }
 db<-
         switch(db,
-                homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa','9606'),
-                mus_musculus=c('org.Mm.eg.db','Mus musculus','mmu','10090'),
+                homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa',"9606"),
+                mus_musculus=c('org.Mm.eg.db','Mus musculus','mmu',"10090"),
                 rno=c('org.Rn.eg.db','Rattus norvegicus','rno'),
                 ss=c('org.Ss.eg.db','Sus scrofa','susScr')
         )
@@ -32,7 +32,26 @@ gl<-gene_list%>%
     mutate(type=ifelse(padj>0.99,'not_significant',
         ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
 
-enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
+enrich_ora<- function(gl,db,out_dir,use_internal_data=F){
+                dir.create(out_dir,recursive = T)
+                ##ppi
+                string_db <- STRINGdb$new(version="12.0",species=as.numeric(db[4]),score_threshold=700,
+                                input_directory= "/public/home/weiyifan/database/stringdb/")
+                print(head(gl$gene))
+
+                deg_mapped <- string_db$map(gl, "gene", removeUnmappedRows = TRUE )
+                
+                cat("Total String id mapped :", dim(deg_mapped)[1])
+                
+                info <- string_db$get_interactions(deg_mapped$STRING_id)
+                
+                pdb<-string_db$get_proteins()
+                info <- left_join(info,pdb,by = c('from'='protein_external_id'))%>%
+                            left_join(pdb,by = c('to'='protein_external_id'))%>%
+                            dplyr::select(4,7,3)%>%
+                            rename('from'=preferred_name.x,'to'=preferred_name.y)
+                write.table(info, file = file.path(out_dir,"STRING_info.txt"),sep="\t", row.names =F, quote = F)
+                
                 pl <- list()
                 geneList <- gl$ENTREZID
                 safe_enrichGO<-possibly(enrichGO,'no results')
@@ -125,27 +144,11 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                 #saveRDS(dl,file.path(out_dir,'enrich_list.rds'))
                 openxlsx::write.xlsx(dl,file.path(out_dir,'enrich_list.xlsx'),overwrite =T)
                 
-                ##ppi
-                string_db <- STRINGdb$new(version="12.0",species=db[4],score_threshold=700,
-                                input_directory= "/public/home/weiyifan/database/stringdb/")
-                
-                deg_mapped <- string_db$map(gl$SYMBOL, "gene", removeUnmappedRows = TRUE )
-                
-                cat("Total String id mapped :", dim(deg_mapped)[1])
-                
-                info <- string_db$get_interactions(deg_mapped$STRING_id)
-                
-                pdb<-string_db$get_proteins()
-                info <- left_join(info,pdb,by = c('from'='protein_external_id'))%>%
-                            left_join(pdb,by = c('to'='protein_external_id'))%>%
-                            dplyr::select(4,7,3)%>%
-                            rename('from'=preferred_name.x,'to'=preferred_name.y)
-                write.table(info, file = file.path(out_dir,"STRING_info.txt"),sep="\t", row.names =F, quote = F)
-                Sys.sleep(30)
+                #Sys.sleep(30)
 }
 
 ##ora
-iwalk(gl,safely(~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y))))
+iwalk(gl,~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y)))
 ##gsea
 geneList <- gene_list$log2FoldChange
 names(geneList) <- gene_list$ENTREZID
@@ -157,18 +160,17 @@ ego <- gseGO(geneList     = geneList,
               minGSSize    = 100,
               maxGSSize    = 500,
               pvalueCutoff = 0.05,
-              verbose      = FALSE,
-              use_internal_data = T
+              verbose      = FALSE
               )
 write.csv(ego,file.path(outdir,'go_gsea.csv'))
 saveRDS(ego,file.path(outdir,'go_gsea.rds'))
 
 kk <- gseKEGG(geneList     = geneList,
-               organism     = db[1],
+               organism     = db[3],
                minGSSize    = 120,
                pvalueCutoff = 0.05,
                verbose      = FALSE,
-               use_internal_data = T
+               use_internal_data = F
                )
 
 write.csv(kk,file.path(outdir,'kegg_gsea.csv'))

@@ -1,6 +1,6 @@
 rule enrichment:
     input:
-        "results/diffexp/{contrast}.diffexp.tsv",
+        "results/diffexp/{contrast}.diffexp.symbol.tsv",
     output:
         directory("results/enrichment/{contrast}"),
     params:

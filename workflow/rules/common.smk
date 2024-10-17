@@ -25,6 +25,8 @@ def get_final_output():
     final_output.append("results/rnanorm/tpm_cor.png")
     final_output.append("results/rnanorm/tpm_heat.png")
     final_output.append("results/rnanorm/tpm_pca.png")
+    final_output.append("results/xCell/xCell.csv")
+    final_output.append("results/xCell/xCell.png")
 
     if config["pca"]["activate"]:
         # get all the variables to plot a PCA for
