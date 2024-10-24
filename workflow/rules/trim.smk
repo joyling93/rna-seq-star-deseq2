@@ -19,7 +19,7 @@ rule cutadapt_pipe:
         ext=r"fastq|fastq\.gz",
     threads: 0
     shell:
-        "mkdir -p pipe/cutadapt/{sample} ;cat {input} > {output} 2> {log}"
+        "mkdir -p pipe/cutadapt/{wildcards.sample} ;cat {input} > {output} 2> {log}"
 
 
 rule cutadapt_pe:
