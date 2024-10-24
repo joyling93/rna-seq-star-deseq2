@@ -32,7 +32,7 @@ gl<-gene_list%>%
     mutate(type=ifelse(padj>0.99,'not_significant',
         ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
 
-enrich_ora<- function(gl,db,out_dir,use_internal_data=F){
+enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                 dir.create(out_dir,recursive = T)
                 ##ppi
                 string_db <- STRINGdb$new(version="12.0",species=as.numeric(db[4]),score_threshold=700,
