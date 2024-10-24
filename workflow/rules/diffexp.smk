@@ -27,7 +27,7 @@ rule gene_2_symbol:
     log:
         "logs/gene2symbol/{prefix}.log",
     conda:
-        "../envs/biomart.yaml"
+        "/public/home/weiyifan/miniforge3/envs/biomart"
     script:
         "../scripts/gene2symbol.R"
 
