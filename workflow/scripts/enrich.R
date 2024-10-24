@@ -12,7 +12,7 @@ db<-snakemake@config[['ref']][['species']]
 outdir<-snakemake@output[[1]]
 dir.create(outdir,recursive = T)
 
-if(!db%in%c("homo_sapiens","org.Mm.eg.db")){
+if(!db%in%c("homo_sapiens","mus_musculus")){
     db<-"homo_sapiens"
 }
 db<-
