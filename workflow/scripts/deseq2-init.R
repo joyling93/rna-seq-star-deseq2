@@ -24,6 +24,7 @@ counts_data <- counts_data[, order(names(counts_data))]
 col_data <- read.table(
   snakemake@config[["samples"]],
   header = TRUE,
+  sep = '\t',
   row.names = "sample_name",
   check.names = FALSE
 )
