@@ -32,7 +32,7 @@ col_data <- col_data[order(row.names(col_data)), , drop = FALSE]
 
 # properly set the base level to the configuration in config.yaml, avoiding
 # the default behaviour of choosing the alphabetical minimum level
-# saveRDS(snakemake@config,'test.rds')
+saveRDS(snakemake@config,'test.rds')
 for (vof in names(snakemake@config[["diffexp"]][["variables_of_interest"]])) {
   snakemake@config[["diffexp"]][["variables_of_interest"]][[vof]]
   base_level <- snakemake@config[["diffexp"]][["variables_of_interest"]][[vof]][["base_level"]]
