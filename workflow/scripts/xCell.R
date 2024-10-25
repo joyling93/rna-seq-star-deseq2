@@ -1,4 +1,6 @@
-
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log)
+sink(log, type="message")
 library(xCell)
 exprMatrix = read.table(snakemake@input[[1]],header=TRUE,row.names=1, as.is=TRUE)
 
