@@ -36,7 +36,7 @@ rule cutadapt_pe:
         adapters=lambda w: str(units.loc[w.sample].loc[w.unit, "adapters"]),
     threads: 8
     wrapper:
-        "v3.5.3/bio/cutadapt/pe"
+        "v4.7.5/bio/cutadapt/pe"
 
 
 rule cutadapt_se:
@@ -52,4 +52,4 @@ rule cutadapt_se:
         adapters=lambda w: str(units.loc[w.sample].loc[w.unit, "adapters"]),
     threads: 8
     wrapper:
-        "v3.5.3/bio/cutadapt/se"
+        "v4.7.5/bio/cutadapt/se"
