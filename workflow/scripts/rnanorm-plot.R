@@ -48,8 +48,6 @@ library("factoextra")
 data.pca<-PCA(t(data), graph = F, scale.unit = T)
 p <- fviz_pca_ind(data.pca, col.ind=col_data[,1], mean.point=F, addEllipses = T, 
                   legend.title="Groups", #ellipse.type="confidence", 
-                  label="none",pointsize =3,
-                  #ellipse.level=0.9, 
-                  palette = c("#CC3333", "#339999"))+ #Cell配色哦 
+                  label="none",pointsize =3)+ #Cell配色哦 
   theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid"))
 ggsave(snakemake@output[[4]],p)
