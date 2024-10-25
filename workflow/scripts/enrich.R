@@ -160,6 +160,7 @@ ego <- gseGO(geneList     = geneList,
               minGSSize    = 100,
               maxGSSize    = 500,
               pvalueCutoff = 0.05,
+              nPerm = 1000,
               by = 'DOSE',
               verbose      = FALSE
               )
@@ -171,6 +172,7 @@ kk <- gseKEGG(geneList     = geneList,
                minGSSize    = 120,
                pvalueCutoff = 0.05,
                verbose      = FALSE,
+               nPerm = 1000,
                 by = 'DOSE',
                use_internal_data = T
                )
