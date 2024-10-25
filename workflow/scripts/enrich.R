@@ -160,6 +160,7 @@ ego <- gseGO(geneList     = geneList,
               minGSSize    = 100,
               maxGSSize    = 500,
               pvalueCutoff = 0.05,
+              by = 'DOSE',
               verbose      = FALSE
               )
 write.csv(ego,file.path(outdir,'go_gsea.csv'))
@@ -170,7 +171,8 @@ kk <- gseKEGG(geneList     = geneList,
                minGSSize    = 120,
                pvalueCutoff = 0.05,
                verbose      = FALSE,
-               use_internal_data = F
+                by = 'DOSE',
+               use_internal_data = T
                )
 
 write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
