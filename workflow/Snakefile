@@ -30,6 +30,7 @@ include: "rules/align.smk"
 include: "rules/diffexp.smk"
 include: "rules/tpm.smk"
 include: "rules/enrich.smk"
+include: "rules/rmats.smk"
 #include: "rules/xCell.smk"
 
 ##### target rules #####
@@ -38,4 +39,5 @@ include: "rules/enrich.smk"
 rule all:
     input:
         get_final_output(),
-        expand("results/enrichment/{contrast}",contrast=config["diffexp"]["contrasts"])
+        expand("results/enrichment/{contrast}",contrast=config["diffexp"]["contrasts"]),
+        expand("results/rmats/{contrast}",contrast=config["diffexp"]["contrasts"])

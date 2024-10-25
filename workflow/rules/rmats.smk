@@ -5,7 +5,9 @@ rule rmats:
     input:
         aln=get_bam
     output:
-        directory("results/rmats/{sample}_{unit}"),
+        directory("results/rmats/{contrast}"),
+    params:
+        contrast=get_contrast,
     log:
         "logs/rmats.log",
     scripts:
