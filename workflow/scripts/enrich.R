@@ -150,32 +150,32 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
 ##ora
 iwalk(gl,~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y)))
 ##gsea
-geneList <- gene_list$log2FoldChange
-names(geneList) <- gene_list$ENTREZID
-geneList <- sort(geneList, decreasing = TRUE)
+#geneList <- gene_list$log2FoldChange
+#names(geneList) <- gene_list$ENTREZID
+#geneList <- sort(geneList, decreasing = TRUE)
 
-ego <- gseGO(geneList     = geneList,
-              OrgDb        = db[1],
-              ont          = "all",
-              minGSSize    = 100,
-              maxGSSize    = 500,
-              pvalueCutoff = 0.05,
-              nPerm = 1000,
-              by = 'DOSE',
-              verbose      = FALSE
-              )
-write.csv(ego,file.path(outdir,'go_gsea.csv'))
-saveRDS(ego,file.path(outdir,'go_gsea.rds'))
+#ego <- gseGO(geneList     = geneList,
+#              OrgDb        = db[1],
+#              ont          = "all",
+#              minGSSize    = 100,
+#              maxGSSize    = 500,
+#              pvalueCutoff = 0.05,
+#              nPerm = 1000,
+#              by = 'DOSE',
+#              verbose      = FALSE
+#              )
+#write.csv(ego,file.path(outdir,'go_gsea.csv'))
+#saveRDS(ego,file.path(outdir,'go_gsea.rds'))
 
-kk <- gseKEGG(geneList     = geneList,
-               organism     = db[3],
-               minGSSize    = 120,
-               pvalueCutoff = 0.05,
-               verbose      = FALSE,
-               nPerm = 1000,
-                by = 'DOSE',
-               use_internal_data = T
-               )
+#kk <- gseKEGG(geneList     = geneList,
+#               organism     = db[3],
+#               minGSSize    = 120,
+#               pvalueCutoff = 0.05,
+#               verbose      = FALSE,
+#               nPerm = 1000,
+#                by = 'DOSE',
+#               use_internal_data = T
+#               )
 
-write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
-saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
+#write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
+#saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
