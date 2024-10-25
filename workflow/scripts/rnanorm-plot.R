@@ -34,7 +34,7 @@ library(pheatmap)
 col_data <- read.table(
   snakemake@config[["samples"]],
   header = TRUE,
-  sep = '\t'
+  sep = '\t',
   row.names = "sample_name",
   check.names = FALSE
 )
