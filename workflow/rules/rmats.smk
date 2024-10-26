@@ -1,6 +1,6 @@
 rule rmats:
     input:
-        aln=get_bam
+        aln=get_bam()
     output:
         directory("results/rmats/{contrast}"),
     params:
