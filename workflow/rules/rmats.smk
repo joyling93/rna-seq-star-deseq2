@@ -9,6 +9,6 @@ rule rmats:
     params:
         contrast=get_contrast,
     log:
-        "logs/rmats.log",
+        "logs/rmats_{contrast}.log",
     script:
         "../scripts/rmats.py"
