@@ -1,4 +1,5 @@
 import sys
+import os
 
 # logging
 sys.stderr = open(snakemake.log[0], "w")
@@ -14,8 +15,18 @@ b1_sample = df["sample_name"][df["condition"].isin([b1_level])].tolist()
 #     if s in b2_sample:
 #         with open(snakemake.output[0], "w") as f:
 b1 = ','.join([s for s in snakemake@input["aln"] if b1_sample in s])
+b1_f = os.path.join(outdir,f"{b1_level}.txt")
+if not os.path.exists(b1_f):
+    with open(b1_f, "w", encoding="utf-8") as file:
+        file.write(b1)
+
 b2 = ','.join([s for s in snakemake@input["aln"] if b2_sample in s])
-cmd = f"python /public/home/weiyifan/miniforge3/envs/rmats/bin/rmats.py --b1 {b1} --b2 {b2} --gtf resources/genome.gtf -t paired --readLength 50 --nthread 4 --od {outdir} --tmp rmat_tmp"
+b2_f = os.path.join(outdir,f"{b2_level}.txt")
+if not os.path.exists(b2_f):
+    with open(b2_f, "w", encoding="utf-8") as file:
+        file.write(b2)
+
+cmd = f"python /public/home/weiyifan/miniforge3/envs/rmats/bin/rmats.py --b1 {b1_f} --b2 {b2_f} --gtf resources/genome.gtf -t paired --readLength 50 --nthread {snakemake@threads[0]} --od {outdir} --tmp {outdir}_tmp"
 print(cmd)
 import subprocess
 
