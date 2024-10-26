@@ -5,7 +5,7 @@ rule enrichment:
         directory("results/enrichment/{contrast}"),
     params:
         contrast=get_contrast,
-    threads: 20,
+    threads: 10,
     conda:
         "/public/home/weiyifan/miniforge3/envs/enrichment"
     log:
