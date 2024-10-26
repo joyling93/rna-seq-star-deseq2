@@ -1,3 +1,8 @@
+import sys
+
+# logging
+sys.stderr = open(snakemake.log[0], "w")
+
 import pandas as pd
 df = pd.read_csv(snakemake.config["samples"], sep='\t', header=0)
 outdir = snakemake@output[0]
