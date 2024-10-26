@@ -10,5 +10,5 @@ rule rmats:
         contrast=get_contrast,
     log:
         "logs/rmats.log",
-    scripts:
+    script:
         "../scripts/rmats.py"
