@@ -198,6 +198,7 @@ def get_contrast(wildcards):
     return config["diffexp"]["contrasts"][wildcards.contrast]
 
 def get_bam(wc):
+    wc=wc
     sample=units["sample_name"]
     unit=units["unit_name"]
     return [f"results/star/{s}_{u}/Aligned.sortedByCoord.out.bam" for s,u in zip(sample,unit)]
