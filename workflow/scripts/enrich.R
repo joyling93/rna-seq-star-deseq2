@@ -5,6 +5,7 @@ suppressMessages(library(org.Mm.eg.db))
 #suppressMessages(library(org.Ss.eg.db))
 suppressMessages(library(KEGG.db))
 library(STRINGdb)
+library(EnhancedVolcano)
 #读取差异表达基因
 library(tidyverse)
 gene_list=read.table(snakemake@input[[1]],header = T)
@@ -12,9 +13,6 @@ db<-snakemake@config[['ref']][['species']]
 outdir<-snakemake@output[[1]]
 dir.create(outdir,recursive = T)
 
-if(!db%in%c("homo_sapiens","mus_musculus")){
-    db<-"homo_sapiens"
-}
 db<-
         switch(db,
                 homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa',"9606"),
@@ -29,7 +27,7 @@ gene_list <- gene_list%>%left_join(eg,by=join_by(gene==SYMBOL))%>%drop_na()
 #geneList<-eg$ENTREZID
 
 gl<-gene_list%>%
-    mutate(type=ifelse(padj>0.05,'not_significant',
+    mutate(type=ifelse(padj>0.05 && abs(log2FoldChange)>0.5,'not_significant',
         ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
 
 enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
@@ -177,3 +175,13 @@ kk <- gseKEGG(geneList     = geneList,
                )
 write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
 saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
+
+# 火山图
+p<-EnhancedVolcano(gl,lab = gl$gene,
+                     x = 'log2FoldChange',
+                     y = 'pvalue',pCutoff=0.05,
+                     ylim = c(0,6),
+                     xlim = c(-5,5),
+                     FCcutoff=0.5)
+fn<-file.path(outdir,'volcano.png')
+ggsave(fn,p,width = 7,height = 7)
