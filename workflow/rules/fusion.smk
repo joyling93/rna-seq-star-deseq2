@@ -10,7 +10,7 @@ rule starFusion:
         "logs/starFusion_{sample}.log",
     shell:
         """
-            STAR-Fusion --genome_lib_dir /public/data/public_data/genomic/species/STAR \
+            STAR-Fusion --genome_lib_dir f'/public/home/weiyifan/xzm/ref/starFusion/{config["ref"]["species"]}/ctat_genome_lib_build_dir' \
             --left_fq {wildcards.fq1} \
             --right_fq {wildcards.fq2} \
             --output_dir results/Fusion/

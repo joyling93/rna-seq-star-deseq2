@@ -55,7 +55,7 @@ diffexp:
   model: ~condition
 
 params:
-  cutadapt-pe: ""
+  cutadapt-pe: "-q 20 -e 0.1 -O 5 -m 50 --pair-filter=any"
   cutadapt-se: ""
   star: ""
 
