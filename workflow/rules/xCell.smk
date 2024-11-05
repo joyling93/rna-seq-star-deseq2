@@ -1,6 +1,6 @@
 rule xCell:
     input:
-        "results/rnanorm/tpm.symbol.tsv",
+        "results/rnanorm/tpm.symbol.xls",
     output:
         "results/xCell/xCell.csv",
         "results/xCell/xCell.png"

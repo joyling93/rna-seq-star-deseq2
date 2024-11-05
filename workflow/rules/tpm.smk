@@ -1,9 +1,9 @@
 rule tpm:
     input:
-        counts="results/counts/all.tsv",
+        counts="results/counts/all.xls",
         gtf="resources/genome.gtf",
     output:
-        "results/rnanorm/tpm.tsv"
+        "results/rnanorm/tpm.xls"
     log:
         "logs/rnanorm.log"
     conda:
@@ -14,9 +14,9 @@ rule tpm:
 
 rule tpm_gene_2_symbol:
     input:
-        counts="results/rnanorm/tpm.tsv",
+        counts="results/rnanorm/tpm.xls",
     output:
-        symbol="results/rnanorm/tpm.symbol.tsv",
+        symbol="results/rnanorm/tpm.symbol.xls",
     params:
         species=get_bioc_species_name(),
     log:
@@ -28,7 +28,7 @@ rule tpm_gene_2_symbol:
 
 rule rnanorm_plot:
     input:
-        tpm="results/rnanorm/tpm.tsv",
+        tpm="results/rnanorm/tpm.xls",
     output:
         "results/rnanorm/tpm_box.png",
         "results/rnanorm/tpm_cor.png",

@@ -61,7 +61,7 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                                  pvalueCutoff  = 0.01,
                                  qvalueCutoff  = 0.05,
                                  readable=T)
-                write.table(ego1,file=file.path(out_dir,'GO_bp_enrich_result.tsv'),quote=F,sep='\t',row.names=F,col.names=T)
+                write.table(ego1,file=file.path(out_dir,'GO_bp_enrich_result.xls'),quote=F,sep='\t',row.names=F,col.names=T)
                 
                 if(!is.null(ego1)){
                         p<-dotplot(ego1, showCategory=30) + ggtitle("BP for ORA")
@@ -81,7 +81,7 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                                  pvalueCutoff  = 0.01,
                                  qvalueCutoff  = 0.05,
                                  readable=T)
-                write.table(ego2,file=file.path(out_dir,'GO_mf_enrich_result.tsv'),quote=F,sep='\t',row.names=F,col.names=T)
+                write.table(ego2,file=file.path(out_dir,'GO_mf_enrich_result.xls'),quote=F,sep='\t',row.names=F,col.names=T)
                 
                 if(!is.null(ego2)){
                         p<-dotplot(ego2, showCategory=30) + ggtitle("MF for ORA")
@@ -101,7 +101,7 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                                  pvalueCutoff  = 0.01,
                                  qvalueCutoff  = 0.05,
                                  readable=T)
-                write.table(ego5,file=file.path(out_dir,'GO_cc_enrich_result.tsv'),quote=F,sep='\t',row.names=F,col.names=T)
+                write.table(ego5,file=file.path(out_dir,'GO_cc_enrich_result.xls'),quote=F,sep='\t',row.names=F,col.names=T)
                 
                 if(!is.null(ego5)){
                         p<-dotplot(ego5, showCategory=30) + ggtitle("CC for ORA")
@@ -127,7 +127,7 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                                 ggsave(file.path(out_dir,'kegg_ora.png'),p,width=20,height = 12)
                                 ggsave(file.path(out_dir,'kegg_ora.pdf'),p,width=20,height = 12)
                                 ego4<-setReadable(ego4,OrgDb = db[1], keyType="ENTREZID")
-                                write.table(ego4,file=file.path(out_dir,'kegg_enrich_result.tsv'),quote=F,sep='\t',row.names=F,col.names=T)
+                                write.table(ego4,file=file.path(out_dir,'kegg_enrich_result.xls'),quote=F,sep='\t',row.names=F,col.names=T)
                                 
                         }
                 }

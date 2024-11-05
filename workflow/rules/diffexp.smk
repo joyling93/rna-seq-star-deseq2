@@ -5,7 +5,7 @@ rule count_matrix:
             unit=units.itertuples(),
         ),
     output:
-        "results/counts/all.tsv",
+        "results/counts/all.xls",
     log:
         "logs/count-matrix.log",
     params:
@@ -19,9 +19,9 @@ rule count_matrix:
 
 rule gene_2_symbol:
     input:
-        counts="{prefix}.tsv",
+        counts="{prefix}.xls",
     output:
-        symbol="{prefix}.symbol.tsv",
+        symbol="{prefix}.symbol.xls",
     params:
         species=get_bioc_species_name(),
     log:
@@ -34,10 +34,10 @@ rule gene_2_symbol:
 
 rule deseq2_init:
     input:
-        counts="results/counts/all.tsv",
+        counts="results/counts/all.xls",
     output:
         "results/deseq2/all.rds",
-        "results/deseq2/normcounts.tsv",
+        "results/deseq2/normcounts.xls",
     conda:
         "../envs/deseq2.yaml"
     log:
@@ -64,7 +64,7 @@ rule deseq2:
     input:
         "results/deseq2/all.rds",
     output:
-        table=report("results/diffexp/{contrast}.diffexp.tsv", "../report/diffexp.rst"),
+        table=report("results/diffexp/{contrast}.diffexp.xls", "../report/diffexp.rst"),
         ma_plot=report("results/diffexp/{contrast}.ma-plot.svg", "../report/ma.rst"),
     params:
         contrast=get_contrast,
