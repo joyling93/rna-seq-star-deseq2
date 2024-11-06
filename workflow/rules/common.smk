@@ -14,19 +14,19 @@ samples = (
 
 def get_final_output():
     final_output = expand(
-        "results/diffexp/{contrast}.diffexp.symbol.tsv",
+        "results/diffexp/{contrast}.diffexp.symbol.xls",
         contrast=config["diffexp"]["contrasts"],
     )
-    final_output.append("results/deseq2/normcounts.symbol.tsv")
-    final_output.append("results/counts/all.symbol.tsv")
+    final_output.append("results/deseq2/normcounts.symbol.xls")
+    final_output.append("results/counts/all.symbol.xls")
     final_output.append("results/qc/multiqc_report.html")
-    final_output.append("results/rnanorm/tpm.tsv")
+    final_output.append("results/rnanorm/tpm.xls")
     final_output.append("results/rnanorm/tpm_box.png")
     final_output.append("results/rnanorm/tpm_cor.png")
     final_output.append("results/rnanorm/tpm_heat.png")
     final_output.append("results/rnanorm/tpm_pca.png")
-    #final_output.append("results/xCell/xCell.csv")
-    #final_output.append("results/xCell/xCell.png")
+    final_output.append("results/xCell/xCell.csv")
+    final_output.append("results/xCell/xCell.png")
 
     if config["pca"]["activate"]:
         # get all the variables to plot a PCA for
