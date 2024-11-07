@@ -7,7 +7,7 @@ rule starFusion:
     conda:
         "/public/home/weiyifan/miniforge3/envs/starFusion"
     params:
-        db=f'/public/home/weiyifan/xzm/ref/starFusion/{{config["ref"]["species"]}}/ctat_genome_lib_build_dir',
+        db=f'/public/home/weiyifan/xzm/ref/starFusion/{config["ref"]["species"]}/ctat_genome_lib_build_dir',
     log:
         "logs/starFusion_{sample}_{unit}.log",
     shell:
