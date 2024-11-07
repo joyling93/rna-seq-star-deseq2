@@ -12,7 +12,7 @@ rule starFusion:
         "logs/starFusion_{sample}_{unit}.log",
     shell:
         """
-            STAR-Fusion --genome_lib_dir params.db \
+            STAR-Fusion --genome_lib_dir {params.db} \
             --left_fq {input.fq1} \
             --right_fq {input.fq2} \
             --output_dir results/Fusion/{wildcards.unit}
