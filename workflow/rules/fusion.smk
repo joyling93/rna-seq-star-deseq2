@@ -2,8 +2,8 @@ rule starFusion:
     input:
         unpack(get_fq),
     output:
-        "results/Fusion/{unit}/{sample}_star-fusion.fusion_predictions.tsv",
-        "results/Fusion/{unit}/{sample}_star-fusion.fusion_predictions.abridged.tsv"
+        "results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.tsv",
+        "results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.abridged.tsv"
     conda:
         "/public/home/weiyifan/miniforge3/envs/starFusion"
     params:
@@ -15,5 +15,5 @@ rule starFusion:
             STAR-Fusion --genome_lib_dir {params.db} \
             --left_fq {input.fq1} \
             --right_fq {input.fq2} \
-            --output_dir results/Fusion/{wildcards.unit}
+            --output_dir results/Fusion/{wildcards.unit}/{wildcards.sample} > {log} 2>&1
         """
