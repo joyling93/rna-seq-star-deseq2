@@ -28,13 +28,15 @@ gene_list <- gene_list%>%left_join(eg,by=join_by(gene==SYMBOL))%>%drop_na()
 
 gl<-gene_list%>%
     mutate(type=ifelse(padj>0.05 | abs(log2FoldChange)<0.5,'not_significant',
-        ifelse(log2FoldChange>0,'up','down')))%>%split(.$type)
+        ifelse(log2FoldChange>0,'up','down')))
+
+string_db <- STRINGdb$new(version="12.0",species=as.numeric(db[4]),score_threshold=700,
+                input_directory= "/public/home/weiyifan/database/stringdb/")
 
 enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                 dir.create(out_dir,recursive = T)
                 ##ppi
-                string_db <- STRINGdb$new(version="12.0",species=as.numeric(db[4]),score_threshold=700,
-                                input_directory= "/public/home/weiyifan/database/stringdb/")
+
                 print(head(gl$gene))
 
                 deg_mapped <- string_db$map(gl, "gene", removeUnmappedRows = TRUE )
@@ -146,7 +148,7 @@ enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
 }
 
 ##ora
-iwalk(gl,~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y)))
+iwalk(gl%>%split(.$type),~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y)))
 ##gsea
 
 library(BiocParallel)
@@ -179,7 +181,7 @@ saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
 # 火山图
 p<-EnhancedVolcano(gl,lab = gl$gene,
                      x = 'log2FoldChange',
-                     y = 'pvalue',pCutoff=0.05,
+                     y = 'padj',pCutoff=0.05,
                      ylim = c(0,6),
                      xlim = c(-5,5),
                      FCcutoff=0.5)
