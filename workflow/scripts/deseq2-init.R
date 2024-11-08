@@ -76,7 +76,7 @@ if(any(table(col_data[,1])<2)) {
   saveRDS(exprSet, file = snakemake@output[[1]])
 
   write.table(
-  exprSet$samples,
+  exprSet$counts,
   file = snakemake@output[[2]],
   sep = "\t",
   row.names = FALSE
