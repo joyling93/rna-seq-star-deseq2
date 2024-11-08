@@ -66,7 +66,23 @@ if (str_length(design_formula) == 0) {
   design_formula <- str_c("~", batch_effects, vof_interactions)
 }
 
-if()
+if(any(table(col_data[,1])<2)) {
+  #无重复样本使用edgeR
+  library("edgeR")
+  exprSet <- DGEList(counts = counts_data, group = col_data[,'condition'])
+  keep <- rowSums(cpm(exprSet)>1) >= 1
+  exprSet <- exprSet[keep, , keep.lib.sizes=FALSE]
+  exprSet <- calcNormFactors(exprSet)
+  saveRDS(exprSet, file = snakemake@output[[1]])
+
+  write.table(
+  exprSet$samples,
+  file = snakemake@output[[2]],
+  sep = "\t",
+  row.names = FALSE
+  )
+  q(save = "no")
+}
 
 
 dds <- DESeqDataSetFromMatrix(

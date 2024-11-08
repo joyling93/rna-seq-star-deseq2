@@ -15,6 +15,26 @@ if (snakemake@threads > 1) {
 
 dds <- readRDS(snakemake@input[[1]])
 
+if(class(dds)[1]=="DGEList"){
+  library("edgeR")
+  bcv = 0.4  #设置BCV值
+  et <- exactTest(dds, dispersion=bcv^2)
+  svg(snakemake@output[["ma_plot"]])
+  dev.off()
+  res <- et$table
+  colnames(res) <- c("log2FoldChange","baseMean","padj")
+  write.table(
+  data.frame(
+    "gene" = rownames(res),
+    res
+  ),
+  file = snakemake@output[["table"]],
+  row.names = FALSE,
+  sep = "\t"
+  )
+  q(save="no")
+}
+
 contrast_config <- snakemake@config[["diffexp"]][["contrasts"]][[
     snakemake@wildcards[["contrast"]]
 ]]
