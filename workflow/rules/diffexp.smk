@@ -39,7 +39,7 @@ rule deseq2_init:
         "results/deseq2/all.rds",
         "results/deseq2/normcounts.xls",
     conda:
-        "/public/home/weiyifan/miniforge3/envs/deseq2"
+        "/public/home/weiyifan/miniforge3/envs/deseq2_init"
     log:
         "logs/deseq2/init.log",
     threads: get_deseq2_threads()
@@ -53,7 +53,7 @@ rule pca:
     output:
         report("results/pca.{variable}.svg", "../report/pca.rst"),
     conda:
-        "/public/home/weiyifan/miniforge3/envs/deseq2"
+        "/public/home/weiyifan/miniforge3/envs/deseq2_pca"
     log:
         "logs/pca.{variable}.log",
     script:
