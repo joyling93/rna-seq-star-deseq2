@@ -1,6 +1,6 @@
 import sys
 import os
-
+import re
 # logging
 sys.stderr = open(snakemake.log[0], "w")
 
@@ -9,12 +9,12 @@ df = pd.read_csv(snakemake.config["samples"], sep='\t', header=0)
 outdir = snakemake.output[0]
 b2_level = snakemake.config["diffexp"]["variables_of_interest"]["condition"]["base_level"]
 b1_level = snakemake.params["contrast"]["level_of_interest"]
-b2_sample = df["sample_name"][df["condition"].isin([b2_level])].tolist()
-b1_sample = df["sample_name"][df["condition"].isin([b1_level])].tolist()
+b2_sample = '|'.join(df["sample_name"][df["condition"].isin([b2_level])].tolist())
+b1_sample = '|'.join(df["sample_name"][df["condition"].isin([b1_level])].tolist())
 # for s in snakemake.input.aln:
 #     if s in b2_sample:
 #         with open(snakemake.output[0], "w") as f:
-b1 = ','.join([s for s in snakemake.input["aln"] if b1_sample in s])
+b1 = ','.join([s for s in snakemake.input["aln"] if re.search(b1_sample,s)])
 b1_f = os.path.join(outdir,f"{b1_level}.txt")
 if not os.path.exists(b1_f):
     with open(b1_f, "w", encoding="utf-8") as file:
