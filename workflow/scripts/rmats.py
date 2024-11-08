@@ -7,7 +7,7 @@ sys.stderr = open(snakemake.log[0], "w")
 import pandas as pd
 df = pd.read_csv(snakemake.config["samples"], sep='\t', header=0)
 outdir = snakemake.output[0]
-b2_level = snakemake.config["diffexp"]["variables_of_interest"]["base_level"]
+b2_level = snakemake.config["diffexp"]["variables_of_interest"]["condition"]["base_level"]
 b1_level = snakemake.params["level_of_interest"]
 b2_sample = df["sample_name"][df["condition"].isin([b2_level])].tolist()
 b1_sample = df["sample_name"][df["condition"].isin([b1_level])].tolist()
