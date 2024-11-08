@@ -19,14 +19,20 @@ p <- data %>%as.tibble()%>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 ggsave(snakemake@output[[1]],p)
 
+# if(ncol(data)<4){
+#   #少于两个样本不做相关矩阵
+#   q(save="no")
+#   }
 #相关矩阵
 library(corrplot)
 png(snakemake@output[[2]],width = 800, height = 800)
 colmat <- colorRampPalette(c("#4B79B6","white", "#FDECA4", "#D33129"))
 correlation_matrix <- cor(data)
-corrplot(correlation_matrix, method = "color",# type = "upper",
-         order = "hclust", tl.col = "black", tl.srt = 45,cl.lim=c(min(correlation_matrix),max(correlation_matrix)),is.corr=FALSE,col=colmat(200),
-         addCoef.col = "blue", diag = FALSE)
+corrplot(correlation_matrix, method = "color",
+         order = "hclust", tl.col = "black", tl.srt = 45,
+         cl.lim=c(min(correlation_matrix),max(correlation_matrix)),
+         is.corr=FALSE,col=colmat(200),
+         addCoef.col = "blue")
 dev.off()
 
 #相关热图
