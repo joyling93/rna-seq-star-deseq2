@@ -15,13 +15,13 @@ b1_sample = '|'.join(df["sample_name"][df["condition"].isin([b1_level])].tolist(
 #     if s in b2_sample:
 #         with open(snakemake.output[0], "w") as f:
 b1 = ','.join([s for s in snakemake.input["aln"] if re.search(b1_sample,s)])
-b1_f = os.path.join(outdir,f"{b1_level}.txt")
+b1_f = os.path.join("results/rmats/",f"{b1_level}.txt")
 if not os.path.exists(b1_f):
     with open(b1_f, "w", encoding="utf-8") as file:
         file.write(b1)
 
 b2 = ','.join([s for s in snakemake.input["aln"] if b2_sample in s])
-b2_f = os.path.join(outdir,f"{b2_level}.txt")
+b2_f = os.path.join("results/rmats/",f"{b2_level}.txt")
 if not os.path.exists(b2_f):
     with open(b2_f, "w", encoding="utf-8") as file:
         file.write(b2)
