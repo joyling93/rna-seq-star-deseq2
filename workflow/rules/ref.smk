@@ -66,6 +66,6 @@ rule star_index:
         extra=lambda wc, input: f"--sjdbGTFfile {input.annotation} --sjdbOverhang 100 --limitGenomeGenerateRAM 169632691637",
     log:
         "logs/star_index_genome.log",
-    cache: False
+    cache: True
     wrapper:
         "v3.5.3/bio/star/index"
