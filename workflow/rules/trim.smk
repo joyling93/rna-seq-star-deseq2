@@ -20,7 +20,7 @@ rule cutadapt_pipe:
     threads: 0
     shell:
         "mkdir -p pipe/cutadapt/{wildcards.sample} && \
-        cp {input} {output} > {log} 2>&1"
+        ln -s {input} {output} > {log} 2>&1"
 
 
 rule cutadapt_pe:
