@@ -1,14 +1,13 @@
-# Snakemake workflow: rna-seq-star-deseq2
+此流程仅bulkrna测序数据分析。
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4737358.svg)](https://doi.org/10.5281/zenodo.4737358)
-[![Snakemake](https://img.shields.io/badge/snakemake-≥6.1.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/snakemake-workflows/rna-seq-star-deseq2/workflows/Tests/badge.svg?branch=master)](https://github.com/snakemake-workflows/rna-seq-star-deseq2/actions?query=branch%3Amaster+workflow%3ATests)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
-
-This workflow performs a differential gene expression analysis with STAR and Deseq2.
-
-## Usage
-
-The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=snakemake-workflows%2Frna-seq-star-deseq2).
-
-If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) repository and its DOI (see above).
+## 流程图示例
+![流程图](./dag.svg "流程图示例")
+## 流程环境
+``conda activate /public/home/weiyifan/miniforge3/envs/sk8``
+## 流程部署
+``snakedeploy deploy-workflow https://github.com/joyling93/rna-seq-star-deseq2 . --tag v1.1.1``
+## 配置信息
+config.yaml;
+samples.yaml
+## 流程运行
+``snakemake -c30 --use-conda --cache``
