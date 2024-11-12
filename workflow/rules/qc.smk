@@ -188,6 +188,10 @@ rule multiqc:
             "logs/rseqc/rseqc_junction_annotation/{unit.sample_name}_{unit.unit_name}.log",
             unit=units.itertuples(),
         ),
+        expand(
+            "results/trimmed/{unit.sample_name}_{unit.unit_name}.paired.qc.txt",
+            unit=units.itertuples(),
+        ),
     output:
         "results/qc/multiqc_report.html",
     log:
