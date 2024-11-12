@@ -31,7 +31,7 @@ print(cmd)
 import os
 
 # 运行shell命令
-result = os.run(cmd)
+result = os.system(cmd)
 
 # 打印命令输出
 # print(result.stdout)
