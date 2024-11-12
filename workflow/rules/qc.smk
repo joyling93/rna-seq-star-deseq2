@@ -149,6 +149,10 @@ rule rseqc_readgc:
 rule multiqc:
     input:
         expand(
+            "results/trimmed/{unit.sample_name}_{unit.unit_name}.paired.qc.txt",
+            unit=units.itertuples(),
+        ),
+        expand(
             "results/qc/rseqc/{unit.sample_name}_{unit.unit_name}.junctionanno.junction.bed",
             unit=units.itertuples(),
         ),
@@ -182,10 +186,6 @@ rule multiqc:
         ),
         expand(
             "logs/rseqc/rseqc_junction_annotation/{unit.sample_name}_{unit.unit_name}.log",
-            unit=units.itertuples(),
-        ),
-        expand(
-            "results/trimmed/{unit.sample_name}_{unit.unit_name}.paired.qc.txt",
             unit=units.itertuples(),
         ),
     output:
