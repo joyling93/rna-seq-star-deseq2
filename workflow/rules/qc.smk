@@ -149,10 +149,6 @@ rule rseqc_readgc:
 rule multiqc:
     input:
         expand(
-            "results/star/{unit.sample_name}_{unit.unit_name}/Aligned.sortedByCoord.out.bam",
-            unit=units.itertuples(),
-        ),
-        expand(
             "results/qc/rseqc/{unit.sample_name}_{unit.unit_name}.junctionanno.junction.bed",
             unit=units.itertuples(),
         ),
