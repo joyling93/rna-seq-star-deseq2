@@ -7,6 +7,8 @@ units: config/units.tsv
 
 
 ref:
+  # get ref from local or ensembl(online)
+  source: local
   # Ensembl species name
   species: homo_sapiens
   # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)

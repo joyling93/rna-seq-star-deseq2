@@ -71,13 +71,13 @@ def get_cutadapt_input(wildcards):
 
     if pd.isna(unit["fq2"]):
         # single end local sample
-        return "pipe/cutadapt/{S}/{U}.fq1.fastq{E}".format(
+        return "pipe/cutadapt/{S}_{U}.fq1.fastq{E}".format(
             S=unit.sample_name, U=unit.unit_name, E=ending
         )
     else:
         # paired end local sample
         return expand(
-            "pipe/cutadapt/{S}/{U}.{{read}}.fastq{E}".format(
+            "pipe/cutadapt/{S}_{U}.{{read}}.fastq{E}".format(
                 S=unit.sample_name, U=unit.unit_name, E=ending
             ),
             read=["fq1", "fq2"],
