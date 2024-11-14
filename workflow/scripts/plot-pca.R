@@ -6,7 +6,11 @@ library("DESeq2")
 
 # load deseq2 data
 dds <- readRDS(snakemake@input[[1]])
-
+if(class(dds)[1]=="DGEList"){
+    svg(snakemake@output[[1]])
+    dev.off()
+    q(save="no")
+}
 # obtain normalized counts
 counts <- rlog(dds, blind=FALSE)
 svg(snakemake@output[[1]])

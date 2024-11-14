@@ -5,7 +5,7 @@
 ## 流程环境
 ``conda activate /public/home/weiyifan/miniforge3/envs/sk8``
 ## 流程部署
-``snakedeploy deploy-workflow https://github.com/joyling93/rna-seq-star-deseq2 . --tag v1.1.1``
+``snakedeploy deploy-workflow https://github.com/joyling93/rna-seq-star-deseq2 . --tag v1.1.4``
 ## 配置信息
 config.yaml;
 samples.yaml

@@ -3,6 +3,21 @@ library(tidyverse)
 # useful error messages upon aborting
 library("cli")
 
+if(snakemake@config[["ref"]][["source"]] == "local") {
+  df <- read.table(snakemake@input[["counts"]], sep='\t', header=1)
+  info <- read.table('resources/star_genome/geneInfo.tab', sep='\t',header=0,skip = 1)
+  df.sym<-df%>%left_join(info[,1:2],by=c("gene"="V1"))%>%
+    select(V2,everything(),-gene)%>%
+    rename(gene=V2)
+  if(!"padj"%in%colnames(df.sym)) {
+    #仅在定量时合并counts
+    df.sym<-df.sym%>%group_by(gene)%>%
+      summarise(across(everything(),sum))
+  }
+  write.table(df.sym, snakemake@output[["symbol"]], sep='\t', row.names=F)
+  q(save="no")
+}
+
 # this variable holds a mirror name until
 # useEnsembl succeeds ("www" is last, because 
 # of very frequent "Internal Server Error"s)
@@ -66,7 +81,7 @@ g2g <- biomaRt::getBM(
 annotated <- merge(df, g2g, by.x="gene", by.y="ensembl_gene_id")
 annotated$gene <- ifelse(annotated$external_gene_name == '', annotated$gene, annotated$external_gene_name)
 annotated$external_gene_name <- NULL
-annotated <- annotated[!duplicated(annotated$gene),]
+annotated <- annotated%>%group_by(gene)%>%summarise(across(everything(),sum))
 write.table(annotated, snakemake@output[["symbol"]], sep='\t', row.names=F)
 
 

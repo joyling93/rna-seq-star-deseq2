@@ -9,12 +9,12 @@ units: config/units.tsv
 ref:
   # get ref from local or ensembl(online)
   source: local
-  # Ensembl species name
+  # Ensembl species name  (e.g. homo_sapiens, mus_musculus, ...)
   species: homo_sapiens
   # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)
   release: 100
   # Genome build
-  build: GRCh38
+  build: GRCm38
 
 trimming:
   # If you activate trimming by setting this to `True`, you will have to
@@ -61,3 +61,9 @@ params:
   cutadapt-se: ""
   star: ""
 
+venn:
+  activate: False
+  contrasts:
+    - treated-vs-untreated
+    - treated-vs-control
+    - treated-vs-pos
