@@ -31,7 +31,7 @@
 
 为了从`STAR`输出中获得正确的`geneCounts`，你可以提供用于一个单元的文库制备方案的链特异性信息。`STAR`可以为非链特异性（`none`——这是默认值）、正向定向（`yes`）和反向定向（`reverse`）方案生成计数。将相应的值输入到`units.tsv`文件的`strandedness`列中。一般情况下不用设置。
 
-### `.fastq`文件来源
+### fastq文件来源
 
 对于每个单元，你必须为你的`.fastq`文件定义一个来源。这可以通过`fq1`、`fq2`和`sra`列来完成，有以下几种方式：
 1. 对于单端读取，一个单一的`.fastq`文件（仅`fq1`列；`fq2`和`sra`列存在但为空）。可以是系统上的任何绝对路径。
@@ -45,9 +45,9 @@
 `release`: 100   # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)  
 `build`: GRCm38 # Ensembl build (e.g. GRCh38, GRCh37, GRCm38, ...)  
 
-## `DESeq2`差异表达分析配置
+## DESeq2 差异表达分析配置
 
-为成功运行差异表达分析，你需要告知 DESeq2 样本如何分组（可在`samples.tsv`文件中定义）。这是在`config.yaml`文件中通过`diffexp:`下的条目来完成的。条目的注释应提供所有必要的信息和链接。但如果有疑问，也请查阅[`DESeq2`手册](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)。  
+为成功运行差异表达分析，你需要告知 DESeq2 样本如何分组（可在`samples.tsv`文件中定义）。这是在`config.yaml`文件中通过`diffexp:`下的条目来完成的。条目的注释应提供所有必要的信息和链接。但如果有疑问，也请查阅[DESeq2手册](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)。  
 `variables_of_interest`:   
     `condition`: # 在samples.tsv中列出的变量名称，用于差异表达分组  
       `base_level`: untreated # 基准水平，用于计算相对差异表达  
