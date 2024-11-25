@@ -49,14 +49,14 @@
 
 为成功运行差异表达分析，你需要告知 DESeq2 样本如何分组（可在`samples.tsv`文件中定义）。这是在`config.yaml`文件中通过`diffexp:`下的条目来完成的。条目的注释应提供所有必要的信息和链接。但如果有疑问，也请查阅[DESeq2手册](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)。  
 `variables_of_interest`:   
-    `condition`: # 在samples.tsv中列出的变量名称，用于差异表达分组  
-      `base_level`: untreated # 基准水平，用于计算相对差异表达  
-  `batch_effects`: "" # 在samples.tsv中列出的变量名称，用于批次效应校正，一般不填  
-  `contrasts`: # 定义差异比较的类型  
-    `treated-vs-untreated`: #代表在 condition 分组中，比较treated水平和untreated水平间的差异  
-      `variable_of_interest`: condition # 分组变量名称  
-      `level_of_interest`: treated  # 差异变量名称  
-  `model`: "" # DESeq2模型公式，一般不填
+  - condition: # 在samples.tsv中列出的变量名称，用于差异表达分组  
+    - base_level: untreated # 基准水平，用于计算相对差异表达  
+  - batch_effects: "" # 在samples.tsv中列出的变量名称，用于批次效应校正，一般不填  
+  - contrasts: # 定义差异比较的类型  
+    - treated-vs-untreated`: #代表在 condition 分组中，比较treated水平和untreated水平间的差异  
+    - variable_of_interest: condition # 分组变量名称  
+    - level_of_interest: treated  # 差异变量名称  
+  - model: "" # DESeq2模型公式，一般不填
 
 ## Venn 图配置
 contrasts: #需和`DESeq2`中的`contrasts`命名一致，至少两个
