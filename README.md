@@ -60,3 +60,25 @@
 
 ## Venn 图配置
 contrasts: #需和`DESeq2`中的`contrasts`命名一致，至少两个
+
+# 输出结果说明
+## trimmed
+接头修剪后的数据和统计
+## star
+star比对结果
+## qc
+接头修剪和比对结果质控
+## counts
+ensemblid/symbol的基因表达举证
+## rnanorm
+对应counts的 tpm normalized数据
+## diffexp
+deseq2差异分析结果，如果样本无重复则使用edger
+## xcell
+免疫浸润分析结果
+## venn
+venn 分析结果，只在定义至少两组比较方案时会生成
+## Fusion
+star-fusion融合基因预测结果
+## rmats
+对应每组差异分析的可变剪切预测结果
