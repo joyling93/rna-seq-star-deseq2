@@ -14,7 +14,7 @@ ref:
   # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)
   release: 100
   # Genome build
-  build: GRCm38
+  build: GRCh38
 
 trimming:
   # If you activate trimming by setting this to `True`, you will have to
@@ -48,6 +48,10 @@ diffexp:
       # must be one of the variables_of_interest
       variable_of_interest: condition
       level_of_interest: treated
+    treated-vs-untreated2:
+      # must be one of the variables_of_interest
+      variable_of_interest: condition
+      level_of_interest: treated
   # The default model includes all interactions among variables_of_interest
   # and batch_effects added on. For the example above this implicitly is:
   # model: ~condition
@@ -62,8 +66,7 @@ params:
   star: ""
 
 venn:
-  activate: False
+  activate: True
   contrasts:
     - treated-vs-untreated
-    - treated-vs-control
-    - treated-vs-pos
+    - treated-vs-untreated2
