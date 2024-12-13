@@ -33,7 +33,7 @@ include: "rules/tpm.smk"
 include: "rules/enrich.smk"
 include: "rules/rmats.smk"
 include: "rules/xCell.smk"
-
+include: "rules/venn.smk"
 ##### target rules #####
 
 
