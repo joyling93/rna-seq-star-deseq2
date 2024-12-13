@@ -38,6 +38,8 @@ def get_final_output():
         final_output.extend(
             expand("results/pca.{variable}.svg", variable=pca_variables)
         )
+    if config["venn"]["activate"]:
+        final_output.append("results/venn/venn.png")
     return final_output
 
 
