@@ -53,18 +53,18 @@ rule rseqc_junction_saturation:
         "> {log} 2>&1"
 
 
-rule rseqc_stat:
-    input:
-        "results/star/{sample}_{unit}/Aligned.sortedByCoord.out.bam",
-    output:
-        "results/qc/rseqc/{sample}_{unit}.stats.txt",
-    priority: 1
-    log:
-        "logs/rseqc/rseqc_stat/{sample}_{unit}.log",
-    conda:
-        "../envs/rseqc.yaml"
-    shell:
-        "bam_stat.py -i {input} > {output} 2> {log}"
+#rule rseqc_stat:
+#    input:
+#        "results/star/{sample}_{unit}/Aligned.sortedByCoord.out.bam",
+#    output:
+#        "results/qc/rseqc/{sample}_{unit}.stats.txt",
+#    priority: 1
+#    log:
+#        "logs/rseqc/rseqc_stat/{sample}_{unit}.log",
+#    conda:
+#        "../envs/rseqc.yaml"
+#    shell:
+#        "bam_stat.py -i {input} > {output} 2> {log}"
 
 
 rule rseqc_infer:
@@ -165,10 +165,6 @@ rule multiqc:
             unit=units.itertuples(),
         ),
         expand(
-            "results/qc/rseqc/{unit.sample_name}_{unit.unit_name}.stats.txt",
-            unit=units.itertuples(),
-        ),
-        expand(
             "results/qc/rseqc/{unit.sample_name}_{unit.unit_name}.inner_distance_freq.inner_distance.txt",
             unit=units.itertuples(),
         ),
@@ -186,6 +182,10 @@ rule multiqc:
         ),
         expand(
             "logs/rseqc/rseqc_junction_annotation/{unit.sample_name}_{unit.unit_name}.log",
+            unit=units.itertuples(),
+        ),
+        expand(
+            "results/star/{unit.sample_name}_{unit.unit_name}/ReadsPerGene.out.tab",
             unit=units.itertuples(),
         ),
     output:

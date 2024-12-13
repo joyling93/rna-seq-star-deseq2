@@ -10,7 +10,7 @@ rule align:
         "logs/star/{sample}_{unit}.log",
     params:
         idx=lambda wc, input: input.index,
-        extra=lambda wc, input: f'--outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile {input.gtf} {config["params"]["star"]}',
-    threads: 24
+        extra=lambda wc, input: f'--outReadsUnmapped Fastx --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile {input.gtf} {config["params"]["star"]}',
+    threads: 29
     wrapper:
         "v3.5.3/bio/star/align"

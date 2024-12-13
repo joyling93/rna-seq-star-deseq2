@@ -11,7 +11,7 @@ rule starFusion:
     log:
         "logs/starFusion_{sample}_{unit}.log",
     threads:
-        20,
+        29,
     shell:
         """
             STAR-Fusion --genome_lib_dir {params.db} \
