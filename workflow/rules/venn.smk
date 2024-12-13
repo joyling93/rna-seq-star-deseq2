@@ -1,6 +1,6 @@
 rule venn:
     input:
-        expand("results/diffexp/{contrast}.diffexp.symbol.tsv",contrast=config["venn"]["contrasts"]),
+        expand("results/diffexp/{contrast}.diffexp.symbol.xls",contrast=config["venn"]["contrasts"]),
     output:
         "results/venn/venn.png"
     conda:
