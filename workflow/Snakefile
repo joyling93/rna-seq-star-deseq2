@@ -34,6 +34,7 @@ include: "rules/enrich.smk"
 include: "rules/rmats.smk"
 include: "rules/xCell.smk"
 include: "rules/venn.smk"
+include: "rules/rmd.smk"
 ##### target rules #####
 
 
@@ -44,3 +45,4 @@ rule all:
         expand("results/rmats/{contrast}",contrast=config["diffexp"]["contrasts"]),
         expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
         expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.abridged.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
+        "results/report.html",
