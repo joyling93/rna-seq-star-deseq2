@@ -34,7 +34,7 @@ gl<-gene_list%>%
         ifelse(log2FoldChange>0,'up','down')))
 
 string_db <- STRINGdb$new(version="12.0",species=as.numeric(db[4]),score_threshold=700,
-                input_directory= "/public/home/weiyifan/database/stringdb/")
+                input_directory= "/public/home/xiezhuoming/xzm/ref/stringdb/")
 
 enrich_ora<- function(gl,db,out_dir,use_internal_data=T){
                 dir.create(out_dir,recursive = T)

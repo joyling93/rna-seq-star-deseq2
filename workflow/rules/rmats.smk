@@ -10,6 +10,6 @@ rule rmats:
     log:
         "logs/rmats_{contrast}.log",
     conda:
-        "/public/home/weiyifan/miniforge3/envs/rmats",
+        "rmats",
     script:
         "../scripts/rmats.py"

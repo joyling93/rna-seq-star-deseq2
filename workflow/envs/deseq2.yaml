@@ -6,3 +6,4 @@ dependencies:
   - bioconductor-deseq2 =1.38
   - r-stringr =1.5
   - r-ashr =2.2_54
+  - bioconductor-edgeR =3.40.2

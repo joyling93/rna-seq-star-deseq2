@@ -22,7 +22,7 @@ rule tpm_gene_2_symbol:
     log:
         "logs/gene2symbol/tpm.log",
     conda:
-        "/public/home/weiyifan/miniforge3/envs/biomart2"
+        "biomart"
     script:
         "../scripts/gene2symbol.R"
 

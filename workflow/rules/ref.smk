@@ -79,7 +79,7 @@ else:
             "resources/genome.fasta",
         shell:
             """
-                ln -s /public/home/weiyifan/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_genome.fa resources/genome.fasta
+                ln -s /public/home/xiezhuoming/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_genome.fa resources/genome.fasta
             """
 
 
@@ -90,7 +90,7 @@ else:
             "resources/genome.gtf",
         shell:
             """
-                ln -s /public/home/weiyifan/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_annot.gtf resources/genome.gtf
+                ln -s /public/home/xiezhuoming/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_annot.gtf resources/genome.gtf
             """
 
     rule star_index:
@@ -103,5 +103,5 @@ else:
             config["ref"]["species"],
         shell:
             """
-                ln -s /public/home/weiyifan/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_genome.fa.star.idx resources/star_genome
+                ln -s /public/home/xiezhuoming/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_genome.fa.star.idx resources/star_genome
             """

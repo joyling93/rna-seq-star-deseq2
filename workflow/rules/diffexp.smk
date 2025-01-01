@@ -27,7 +27,7 @@ rule gene_2_symbol:
     log:
         "logs/gene2symbol/{prefix}.log",
     conda:
-        "/public/home/weiyifan/miniforge3/envs/biomart"
+        "biomart"
     script:
         "../scripts/gene2symbol.R"
 
@@ -39,7 +39,7 @@ rule deseq2_init:
         "results/deseq2/all.rds",
         "results/deseq2/normcounts.xls",
     conda:
-        "/public/home/weiyifan/miniforge3/envs/deseq2_init"
+        "deseq2"
     log:
         "logs/deseq2/init.log",
     threads: get_deseq2_threads()
@@ -53,7 +53,7 @@ rule pca:
     output:
         report("results/pca.{variable}.svg", "../report/pca.rst"),
     conda:
-        "/public/home/weiyifan/miniforge3/envs/deseq2_pca"
+        "deseq2"
     log:
         "logs/pca.{variable}.log",
     script:
@@ -69,7 +69,7 @@ rule deseq2:
     params:
         contrast=get_contrast,
     conda:
-        "/public/home/weiyifan/miniforge3/envs/deseq2"
+        "deseq2"
     log:
         "logs/deseq2/{contrast}.diffexp.log",
     threads: get_deseq2_threads()

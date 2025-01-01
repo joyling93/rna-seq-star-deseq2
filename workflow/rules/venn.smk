@@ -4,7 +4,7 @@ rule venn:
     output:
         "results/venn/venn.png"
     conda:
-        "/public/home/weiyifan/miniforge3/envs/seurat4",
+        "enrichment",
     log:
         "logs/venn.log",
     script:

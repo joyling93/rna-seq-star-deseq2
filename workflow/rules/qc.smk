@@ -190,6 +190,8 @@ rule multiqc:
         ),
     output:
         "results/qc/multiqc_report.html",
+    priority:
+        1,
     log:
         "logs/multiqc.log",
     wrapper:

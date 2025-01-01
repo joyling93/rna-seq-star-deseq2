@@ -7,7 +7,7 @@ rule enrichment:
         contrast=get_contrast,
     threads: 10,
     conda:
-        "/public/home/weiyifan/miniforge3/envs/enrichment"
+        "enrichment"
     log:
         "logs/enrich/{contrast}.log",
     script:

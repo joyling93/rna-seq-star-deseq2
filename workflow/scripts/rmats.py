@@ -26,7 +26,7 @@ if not os.path.exists(b2_f):
     with open(b2_f, "w", encoding="utf-8") as file:
         file.write(b2)
 
-cmd = f"~/miniforge3/envs/rmats/bin/python /public/home/weiyifan/miniforge3/envs/rmats/bin/rmats.py --b1 {b1_f} --b2 {b2_f} --gtf resources/genome.gtf -t paired --readLength 150 --nthread {snakemake.threads} --od {outdir} --tmp {outdir}_tmp"
+cmd = f"~/miniforge3/envs/rmats/bin/python /public/home/xiezhuoming/miniforge3/envs/rmats/bin/rmats.py --b1 {b1_f} --b2 {b2_f} --gtf resources/genome.gtf -t paired --readLength 150 --nthread {snakemake.threads} --od {outdir} --tmp {outdir}_tmp"
 print(cmd)
 import os
 

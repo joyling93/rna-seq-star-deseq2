@@ -5,9 +5,9 @@ rule starFusion:
         "results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.tsv",
         "results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.abridged.tsv"
     conda:
-        "/public/home/weiyifan/miniforge3/envs/starFusion"
+        "starFusion"
     params:
-        db=f'/public/home/weiyifan/xzm/ref/starFusion/{config["ref"]["species"]}/ctat_genome_lib_build_dir',
+        db=f'/public/home/xiezhuoming/xzm/ref/starFusion/{config["ref"]["species"]}/ctat_genome_lib_build_dir',
     log:
         "logs/starFusion_{sample}_{unit}.log",
     threads:

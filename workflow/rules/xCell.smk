@@ -5,7 +5,7 @@ rule xCell:
         "results/xCell/xCell.csv",
         "results/xCell/xCell.png"
     conda:
-        "/public/home/weiyifan/miniforge3/envs/xCell"
+        "xCell"
     log:
         "logs/xCell.log",
     script:

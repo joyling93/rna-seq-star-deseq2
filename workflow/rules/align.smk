@@ -8,6 +8,8 @@ rule align:
         reads_per_gene="results/star/{sample}_{unit}/ReadsPerGene.out.tab",
     log:
         "logs/star/{sample}_{unit}.log",
+    priority:
+        1,
     params:
         idx=lambda wc, input: input.index,
         extra=lambda wc, input: f'--outReadsUnmapped Fastx --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --sjdbGTFfile {input.gtf} {config["params"]["star"]}',
