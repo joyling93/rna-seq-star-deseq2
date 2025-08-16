@@ -34,7 +34,7 @@ include: "rules/enrich.smk"
 include: "rules/rmats.smk"
 include: "rules/xCell.smk"
 include: "rules/venn.smk"
-include: "rules/rmd.smk"
+include: "rules/report.smk"
 ##### target rules #####
 
 

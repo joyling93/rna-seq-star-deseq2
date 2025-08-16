@@ -105,3 +105,11 @@ else:
             """
                 ln -s /public/home/xiezhuoming/xzm/ref/starFusion/{params[0]}/ctat_genome_lib_build_dir/ref_genome.fa.star.idx resources/star_genome
             """
+
+rule get_template:
+    output:
+        dir=directory("resources/template"),
+    shell:
+        """
+            cp -r "/public/home/xiezhuoming/xzm/ref/rmd_templete/rna/" resources/template
+        """
