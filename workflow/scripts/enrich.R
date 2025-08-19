@@ -156,28 +156,33 @@ iwalk(gl%>%split(.$type),~enrich_ora(gl=.x,db=db,out_dir=file.path(outdir,.y)))
 
 library(BiocParallel)
 options(MulticoreParam=MulticoreParam(workers=snakemake@threads[[1]]))
-geneList <- gene_list$log2FoldChange
-names(geneList) <- gene_list$ENTREZID
-geneList <- sort(geneList, decreasing = TRUE)
 
-ego <- gseGO(geneList     = geneList,
+gl1 <- gene_list$log2FoldChange
+names(gl1) <- gene_list$gene
+gl1 <- sort(gl1, decreasing = TRUE)
+ego <- gseGO(geneList     = gl1,
               OrgDb        = db[1],
               ont          = "all",
               minGSSize    = 100,
               maxGSSize    = 500,
               pvalueCutoff = 0.05,
-              verbose      = FALSE
+              verbose      = FALSE,
+              keyType = "SYMBOL"
               )
 write.csv(ego,file.path(outdir,'go_gsea.csv'))
 saveRDS(ego,file.path(outdir,'go_gsea.rds'))
 
-kk <- gseKEGG(geneList     = geneList,
+gl2 <- gene_list$log2FoldChange
+names(gl2) <- gene_list$ENTREZID
+gl2 <- sort(gl2, decreasing = TRUE)
+kk <- gseKEGG(geneList     = gl2,
                organism     = db[3],
                minGSSize    = 120,
                pvalueCutoff = 0.05,
                verbose      = FALSE,
                use_internal_data = T
                )
+kk<-setReadable(kk,OrgDb = db[1], keyType="ENTREZID")
 write.csv(kk,file.path(outdir,'kegg_gsea.csv'))
 saveRDS(kk,file.path(outdir,'kegg_gsea.rds'))
 

@@ -1,10 +1,10 @@
 rule rmd_report:
     input: 
         directory("resources/template"),
-        rules.enrichment.output,
-        rules.starFusion.output,
-        rules.rmats.output,
-        rules.venn.output
+        directory("resources/enrichment"),
+        directory("resources/Fusion"),
+        directory("resources/rmats"),
+        directory("resources/venn")
     output:
         "results/report.html",
     conda:

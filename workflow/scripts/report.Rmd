@@ -185,15 +185,15 @@ map_dfr(fl,function(x){
 
 #### 差异表达基因火山图
 火山图 ( Volcano Plot ) 是一种展示 FoldChange 和 Pvalue 这两个重要指标的一种统计图，可以非常直观的查看在两样本间发生差异表达的基因整体分布情况。我们根据设定的阈值：padj < 0.05 ，对样本间的差异基因进行筛选获取上调和下调基因相对应的 FoldChange 和 padj 。绘制下图，图中蓝色表示为表达量下调基因，红色表示为表达量上调基因。
-```{r ,fig.align='center', out.height='30%',fig.cap='差异基因表达火山图'}
+```{r ,fig.align='center', out.height='30%',fig.cap='差异表达基因火山图'}
 
 library(purrr)
 fl<-list.files("../../results/enrichment/",pattern = 'volcano.png',recursive = T,full.names = T)
 if(length(fl) >0 ){knitr::include_graphics(fl[[1]])}
 ```
-#### 基因数目韦恩图
+#### 韦恩图
 韦恩图展示不同组合间差异表达基因的重叠情况，圈内所有数字之和代表该比较组合差异基因总数，重叠区域表示组合间共有的差异基因。对于两个分组(样本)间的比较情况，则展示两组(样本)之间共同表达与特异表达基因的情况，圈内所有数字之和代表该组（样本）表达基因总数，重叠区域表示组(样本)间共有的表达基因数目。
-```{r ,fig.align='center', out.height='25%',fig.cap='基因表达数目韦恩图'}
+```{r ,fig.align='center', out.height='25%',fig.cap='差异表达基因韦恩图'}
 
 library(purrr)
 fl<-list.files("../../results/venn/",pattern = 'venn.png',recursive = T,full.names = T)
@@ -297,7 +297,7 @@ map_dfr(fl,function(x){
 GSEA分析（Gene Set Enrichment Analysis），基因集富集分析[^19]，是目前非常常用的RNA表达分析手段。GSEA不需要指定明确的差异基因阈值，算法会根据实际数据的整体趋势，为我们提供一种合理的解决方法，即使在没有先验经验的情况下也能在表达谱整体层次上对多个基因进行分析，从而从数理统计层面把表达谱数据与生物学意义很好地衔接起来。目前分析物种只支持人、小鼠，最低条件满足3V3组合才能跑gsea分析。
 
 #### GSEA结果展示
-下图展示了基因表达的可变性与细胞中平均表达水平的关系，红线显示的了基于此关系的期望值， 我们将用于后续的细胞亚群识别或沿轨迹排序细胞标记为黑点，而其他基于显示为灰点。
+下图展示了kegg 数据库的 gsea富集结果
 ```{r }
 library(purrr)
 fl<-list.files("../../results/enrichment",pattern = 'kegg_gsea.csv',recursive = T,full.names = T)
