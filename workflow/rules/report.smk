@@ -1,10 +1,6 @@
 rule rmd_report:
     input: 
-        directory("resources/template"),
-        directory("resources/enrichment"),
-        directory("resources/Fusion"),
-        directory("resources/rmats"),
-        directory("resources/venn")
+        "results/qc/multiqc_report.html"
     output:
         "results/report.html",
     conda:
