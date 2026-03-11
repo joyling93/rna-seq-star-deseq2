@@ -31,15 +31,19 @@ rule cutadapt_pe:
     output:
         fastq1="results/trimmed/{sample}_{unit}_R1.fastq.gz",
         fastq2="results/trimmed/{sample}_{unit}_R2.fastq.gz",
-        qc="results/trimmed/{sample}_{unit}.paired.qc.txt",
+        qc="results/trimmed/{sample}_{unit}.json",
     log:
         "logs/cutadapt/{sample}_{unit}.log",
     params:
         extra=config["params"]["cutadapt-pe"],
         adapters=lambda w: str(units.loc[w.sample].loc[w.unit, "adapters"]),
     threads: 8
-    wrapper:
-        "v4.7.5/bio/cutadapt/pe"
+    conda:
+        "tools"
+    shell:
+        """
+            fastp -i {input[0]} -I {input[1]} -o {output.fastq1} -O {output.fastq2} -w {threads} -j {output.qc} 2> {log}
+        """
 
 
 rule cutadapt_se:

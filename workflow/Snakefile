@@ -36,13 +36,19 @@ include: "rules/xCell.smk"
 include: "rules/venn.smk"
 include: "rules/report.smk"
 ##### target rules #####
-
-
-rule all:
-    input:
-        get_final_output(),
-        expand("results/enrichment/{contrast}",contrast=config["diffexp"]["contrasts"]),
-        expand("results/rmats/{contrast}",contrast=config["diffexp"]["contrasts"]),
-        expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
-        expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.abridged.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
-        "results/report.html",
+if config["ref"]["species"]=="homo_sapiens" or config["ref"]["species"]=="mus_musculus":
+    rule all:
+        input:
+            get_final_output(),
+            expand("results/enrichment/{contrast}",contrast=config["diffexp"]["contrasts"]),
+            expand("results/rmats/{contrast}",contrast=config["diffexp"]["contrasts"]),
+            expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
+            expand("results/Fusion/{unit}/{sample}/star-fusion.fusion_predictions.abridged.tsv",sample=samples["sample_name"],unit=units["unit_name"]),
+            "results/report.html"
+else:
+    rule all:
+        input:
+            get_final_output(),
+            expand("results/enrichment/{contrast}",contrast=config["diffexp"]["contrasts"]),
+            expand("results/rmats/{contrast}",contrast=config["diffexp"]["contrasts"]),
+            "results/report.html"

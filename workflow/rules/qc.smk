@@ -149,7 +149,7 @@ rule rseqc_readgc:
 rule multiqc:
     input:
         expand(
-            "results/trimmed/{unit.sample_name}_{unit.unit_name}.paired.qc.txt",
+            "results/trimmed/{unit.sample_name}_{unit.unit_name}.json",
             unit=units.itertuples(),
         ),
         expand(

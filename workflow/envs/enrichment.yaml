@@ -7,6 +7,7 @@ dependencies:
   - bioconductor-clusterProfiler=4.10.0
   - bioconductor-org.Hs.eg.db=3.18.0
   - bioconductor-org.Mm.eg.db=3.18.0
+  - bioconductor-org.Rn.eg.db=3.22.0
   - bioconductor-STRINGdb=2.14.0
   - bioconductor-EnhancedVolcano=1.20.0
   - r-tidyverse=2.0.0

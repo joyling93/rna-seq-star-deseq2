@@ -4,7 +4,7 @@ sink(log, type = "message")
 suppressMessages(library(clusterProfiler))
 suppressMessages(library(org.Hs.eg.db))
 suppressMessages(library(org.Mm.eg.db))
-#suppressMessages(library(org.Rn.eg.db))
+suppressMessages(library(org.Rn.eg.db))
 #suppressMessages(library(org.Ss.eg.db))
 suppressMessages(library(KEGG.db))
 library(STRINGdb)
@@ -20,7 +20,7 @@ db<-
         switch(db,
                 homo_sapiens=c('org.Hs.eg.db','Homo sapiens','hsa',"9606"),
                 mus_musculus=c('org.Mm.eg.db','Mus musculus','mmu',"10090"),
-                rno=c('org.Rn.eg.db','Rattus norvegicus','rno'),
+                rattus_norvegicus=c('org.Rn.eg.db','Rattus norvegicus','rno',"10116"),
                 ss=c('org.Ss.eg.db','Sus scrofa','susScr')
         )
 
